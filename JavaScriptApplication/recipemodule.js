@@ -2,7 +2,7 @@ const host = "ba531-javascriptapp-appserver.azurewebsites.net";
 const https = require('https');
 const path = require('path');
 const recipeEndPoint = '/api/recipes';
-const ingredientsEndpoint = '/api/ingredients';
+const ingredientsEndpoint ='/api/ingredients';
 
 function getData(endpoint){
     return new Promise(function(resolve, rejects){
@@ -34,17 +34,38 @@ function ingredient(name, maxPPG){
     this.maxPPG = maxPPG;
 }
 
-function calcMaxPPG(recipeName, recipeEndPoint, ingredientsEndpoint){ //doesnt need 2 promises
+
+
+
+function calcMaxPPG(recipeName, recipeEndPoint, ingredientsEndpoint){ //calculates the maxPPG for Drifter
     return new Promise(function(resolve, rejects){
-        getData(ingredientsEndpoint)
+        getData(recipeEndPoint)
+            .then(recipe => {
+                getData(ingredientsEndpoint)
+                .then(ingredient => {
+                    let total = 0;
+                    recipe.ingredients.forEach(item => {
+                        ingredients.foreach(ingredient => {
+                            if (item.name === ingredient.name){
+                                total += item.quantity * ingredient.maxPPG;
+                            }
+                        })
+                    console.log(total);
+                    })
+                })
+            })
+            .catch(error => {
+
         
+    });
+
+
     })
 }
-
 
 module.exports = {
     getData,
     recipe,
     ingredient,
-    calcMaxPPG,
+    calcMaxPPG
 }
